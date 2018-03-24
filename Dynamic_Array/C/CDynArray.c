@@ -41,9 +41,10 @@ int main() {
   	}  	
   	//reverse list
   	list = reverse(&list);
+  	printf("\n"); //newline
   	//print out elements
   	for (i = 0; i < 25; i++) {
-  		printf("\nREVERSE:: Element: %d, at i = %d\n", list.arraylist[i], i);
+  		printf("REVERSE:: Element: %d, at i = %d\n", list.arraylist[i], i);
   	}  	
   	//free up the memory used for our arraylist
   	freeArraylist(&list);
