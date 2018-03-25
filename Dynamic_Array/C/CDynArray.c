@@ -12,7 +12,7 @@ How to run (linux):
 #include <stdio.h>
 #include <stdlib.h>
 
-//struct definition
+//struct definitions
 typedef struct {
 	int *arraylist;
 	size_t size;
@@ -22,13 +22,15 @@ typedef struct {
 //function definitions
 void add(Arraylist*, int);
 Arraylist reverse(Arraylist*);
+Arraylist sublist(Arraylist*, int, int);
+size_t listSize(Arraylist*);
 void init(Arraylist*);
 void freeArraylist(Arraylist*);
 
 //main driver
 int main() {
 	//local declarations
-  	Arraylist list;
+  	Arraylist list, subListA, subListB;
   	int i;
   	//initialize list and insert numbers into it
   	init(&list);
@@ -39,15 +41,32 @@ int main() {
   	for (i = 0; i < 25; i++) {
   		printf("ORIGINAL:: Element: %d, at i = %d\n", list.arraylist[i], i);
   	}  	
+  	printf("\n"); //newline
+  	subListA = sublist(&list, 0, (list.size/2));
+  	//print out elements
+  	for (i = 0; i < subListA.size; i++) {
+  		printf("SublistA:: Element: %d, at i = %d\n", subListA.arraylist[i], i);
+  	}
+  	printf("\n"); //newline
+  	subListB = sublist(&list, (list.size/2), list.size);
+  	//print out elements
+  	for (i = 0; i < subListB.size; i++) {
+  		printf("SublistB:: Element: %d, at i = %d\n", subListB.arraylist[i], i);
+  	}
   	//reverse list
   	list = reverse(&list);
   	printf("\n"); //newline
   	//print out elements
   	for (i = 0; i < 25; i++) {
   		printf("REVERSE:: Element: %d, at i = %d\n", list.arraylist[i], i);
-  	}  	
+  	}
+  	//print out sizes of each arraylists
+  	printf("\n");
+  	printf("Size:: Arraylist size: %zu\n", listSize(&list));
+  	printf("Size:: Sub-ArraylistA size: %zu\n", listSize(&subListA));
+  	printf("Size:: Sub-ArraylistB size: %zu\n", listSize(&subListB));  	
   	//free up the memory used for our arraylist
-  	freeArraylist(&list);
+  	freeArraylist(&list); freeArraylist(&subListA); freeArraylist(&subListB);
   	return 0;
 }
 
@@ -63,7 +82,7 @@ void add(Arraylist *list, int newItem) {
 Arraylist reverse(Arraylist *list) {
 	//local declarations
 	Arraylist reverseList;
-	int i, limit = (*list).size-2;
+	int i, limit = (*list).size-1;
 	//initialize new reverselist
 	init(&reverseList);
 	//loop through from i = 0+kth and set size-kth element to it
@@ -74,10 +93,29 @@ Arraylist reverse(Arraylist *list) {
 	return reverseList;
 }
 
+//sublist function will take in arguments of the list and ranges (start to finish) and return a subset of the array
+Arraylist sublist(Arraylist *list, int start, int end) {
+	//local declarations
+	Arraylist sublist;
+	int i;
+	//initialize new reverselist
+	init(&sublist);
+	//loop through from and add list ith element to sublist ith position
+	for(i = start; i < end; i++) {
+		add(&sublist, (*list).arraylist[i]);
+	}
+	return sublist;
+}
+
+//size function will return the size of the arraylist
+size_t listSize(Arraylist *list) {
+	return (*list).size;
+}
+
 //init function will initialize and allocate memory for this arraylist
 void init(Arraylist *list) {
 	(*list).arraylist = (int *)malloc(sizeof(int));
-	(*list).size = 1;
+	(*list).size = 0;
 	(*list).elemSoFar = 0;
 }
 
