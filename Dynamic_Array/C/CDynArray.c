@@ -1,6 +1,6 @@
 //Kevin Nguyen
 //Basic program for C (C files) that implements a dynammic array for use. This array should act similar to an arraylist in java, but may look similar to LinkedLists.
-//NOTE: Look up information on pointer basics in C/C++
+//NOTE: Look up information on pointer basics and memory management in C/C++
 
 /*
 How to run (linux):
