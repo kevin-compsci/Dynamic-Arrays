@@ -28,7 +28,7 @@ size_t listSize(Arraylist*);
 void init(Arraylist*);
 void freeArraylist(Arraylist*);
 
-//main driver
+//Main Driver
 int main() {
 	//local declarations
   	Arraylist list, subListA, subListB;
